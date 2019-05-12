@@ -9,11 +9,6 @@ package exercicio2;
 
 public class Exercicio2{
 
-    static int [][]M = {{1,2,3}, {4,5,6}, {7,8,9}};
-    static int [][]Mt = new int[3][3];
-    static int [][]R = new int[3][3];
-    static int [][]Id = {{1,0,0}, {0,1,0}, {0,0,1}};
-
     public static void calculaTransposta(int [][]m, int [][]mt){
         for(int i=0; i<m.length; i++){
             for(int j=0; j<m[i].length; j++){
@@ -58,6 +53,11 @@ public class Exercicio2{
     }
     
     public static void main(String[] args){
+        int [][]M = {{1,2,3}, {4,5,6}, {7,8,9}};
+        int [][]Mt = new int[3][3];
+        int [][]R = new int[3][3];
+        int [][]Id = {{1,0,0}, {0,1,0}, {0,0,1}};
+        
         calculaTransposta(M, Mt);
         
         System.out.println("Matriz M");
