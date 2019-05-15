@@ -9,7 +9,7 @@ public class Exercicio8{
     public static int encontraMaior(int []v, int i, int posicao){
     
         if(i==1)
-        //Retorna o valor que ficou sem par ao final da divisão do vetor (Isso só ocorre quando o número de posições do vetor é ímpar)
+        //Retorna o valor que ficou sem par ao final da divisão do vetor
             return v[posicao];
         else if(i==2){
         //Compara os valores nos pares ao final da divisão do vetor
