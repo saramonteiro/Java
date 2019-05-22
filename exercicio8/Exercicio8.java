@@ -3,8 +3,18 @@ Obs.: Não é permitido utilizar qualquer outro vetor/matriz para auxiliar.*/
 package exercicio8;
 
 import java.lang.Math;
+import java.util.Random;
 
 public class Exercicio8{
+
+    public static void preencheVetorAleatorio(int []v){
+    
+        Random random = new Random();
+        
+        for(int i = 0; i < v.length; i++){
+            v[i] = random.nextInt(300);
+        }
+    }
     
     public static int encontraMaior(int []v, int i, int posicao){
     
@@ -33,8 +43,9 @@ public class Exercicio8{
     }
     
     public static void main(String []args){
-        int []V = {13, 14, 7, 3, 1, 9, 110, 0, 12, -11, 88, 0, 7, -1, 167, 2, 31, 2, 6, 20};
-        int []W = {-13, -14, -7, 3, 1, 9, 110, 0, 12, -11, 88, 0, 7, -1, -167, 2, 31, 2, 6, -20, 200};
+        int []V = new int[20];
+        
+        preencheVetorAleatorio(V);
         
         System.out.print("Vetor: ");
         for(int j=0;j<V.length;j++)
