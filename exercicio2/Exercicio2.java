@@ -1,5 +1,4 @@
-/* 2) Considere uma matriz M de ordem 3 de números inteiros armazenada no arquivo
-“MatrizM.txt”. Faça um algoritmo para ler esta matriz do arquivo e imprimir na tela se ela é ou não uma Matriz Ortogonal.
+/* 2) Considere uma matriz M de ordem 3 de números inteiros armazenada no arquivo “MatrizM.txt”. Faça um algoritmo para ler esta matriz do arquivo e imprimir na tela se ela é ou não uma Matriz Ortogonal.
     Utilize três procedimentos: um para gerar a matriz M, outro para calcular a sua matriz Transposta (MT) e o terceiro para calcular a multiplicação M.MT.
     Utilize também uma função para retornar se a matriz M é Ortogonal ou não.
     A impressão dessa informação tem que ser na função main.
@@ -7,7 +6,23 @@ Obs.: Se uma matriz quadrada M é uma matriz ortogonal, então M.MT = I, onde MT
 
 package exercicio2;
 
+import java.util.Random;
+
 public class Exercicio2{
+
+    public static void preencheMatrizAleatoria(int [][]matriz)
+	{
+		Random random = new Random();
+		int i, j; 
+		for(i = 0; i < matriz.length; i++)
+		{
+			for(j = 0; j < matriz[i].length; j++)
+			{
+				matriz[i][j] = random.nextInt(30);
+			}
+		}
+	}
+
 
     public static void calculaTransposta(int [][]m, int [][]mt){
         for(int i=0; i<m.length; i++){
@@ -53,10 +68,12 @@ public class Exercicio2{
     }
     
     public static void main(String[] args){
-        int [][]M = {{1,2,3}, {4,5,6}, {7,8,9}};
+        int [][]M = new int[3][3];
         int [][]Mt = new int[3][3];
         int [][]R = new int[3][3];
         int [][]Id = {{1,0,0}, {0,1,0}, {0,0,1}};
+        
+        preencheMatrizAleatoria(M);
         
         calculaTransposta(M, Mt);
         
