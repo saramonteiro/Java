@@ -3,7 +3,19 @@ Obs.: Não é permitido utilizar qualquer outro vetor/matriz para auxiliar a ord
 
 package exercicio4;
 
+import java.util.Random;
+
 public class Exercicio4{
+
+    public static void preencheVetorAleatorio(int []v){
+    
+        Random random = new Random();
+        
+        for(int i = 0; i < v.length; i++)
+			{
+				v[i] = random.nextInt(100);
+			}
+    }
 
     public static void ordenaVetor(int []v){
         int aux;
@@ -26,7 +38,9 @@ public class Exercicio4{
     }
     
     public static void main(String []args){
-        int []V = {13, -11, 4, 0, 3, 1, 0,  10, -11, -2, 8, 90, 11, 2, 15, 11, -2, 18, 0, 131, 9, -32, 4, 21, -9, 9, -4, 28, 7, 30};
+        int []V = new int[30];
+        
+        preencheVetorAleatorio(V);
     
         System.out.println("V antes da ordenação:");
         mostraVetor(V);
