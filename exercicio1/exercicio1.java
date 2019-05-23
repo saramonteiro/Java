@@ -23,7 +23,7 @@ public class exercicio1
 		{
 			for(coluna = 0; coluna < matriz[linha].length; coluna++)
 			{
-				matriz[linha][coluna] = random.nextInt(20);
+				matriz[linha][coluna] = random.nextInt(1,20);
 			}
 		}
 	}

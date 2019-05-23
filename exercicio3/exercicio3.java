@@ -9,72 +9,52 @@ organização.*/
 import java.util.Random;
 public class exercicio3
 {
-	public static void preencheVetor(int []vetor)
-	{
-		Random random = new Random();
-		int index, max = 10, impares = 0, pares = 0, numero = 0;
-		for(index = 0; index < vetor.length; index++)
-		{
-			numero =random.nextInt(20); 
-			if(((numero%2) == 0) && (pares < max))
-			{
-				pares++;
-				vetor[index] = numero;
-			}
-			else 
-			{
-				impares++;
-				vetor[index] = numero;
-			}
-		}
-	}
 	public static void organizaVetor(int []vetor)
 	{
-		int indiceFora, indiceInterno, auxiliar = 0;
-		for(indiceFora = 0; indiceFora < vetor.length; indiceFora++)
+		int indiceAtual, indiceMovel, auxiliar = 0;
+		for(indiceAtual = 0; indiceAtual < vetor.length; indiceAtual++)
 		{
-			indiceInterno = indiceFora;
+			indiceMovel = indiceAtual;
 			//se o indice do vetor for par
-			if((indiceFora % 2) == 0)
+			if((indiceAtual % 2) == 0)
 			{
 				//percorrer o vetor a partir da atual posição até encontrar um impar
-				while((vetor[indiceInterno] % 2) == 0)
+				while((vetor[indiceMovel] % 2) == 0)
 				{
-					indiceInterno++;
+					indiceMovel++;
 				}
 			}
 			else
 			{
 				//percorrer o vetor a partir da atual posição até encontrar um par
-				while((vetor[indiceInterno] % 2) != 0)
+				while((vetor[indiceMovel] % 2) != 0)
 				{
-					indiceInterno++;
+					indiceMovel++;
 				}
 			}
 			//trocar
-			auxiliar = vetor[indiceFora];
-			vetor[indiceFora] = vetor[indiceInterno];
-			vetor[indiceInterno] = auxiliar;
+			auxiliar = vetor[indiceAtual];
+			vetor[indiceAtual] = vetor[indiceMovel];
+			vetor[indiceMovel] = auxiliar;
 		}	
 	}
 	public static void imprimeVetor(int []vetor)
 	{
-		for(int i=0; i<vetor.length; i++)
-        {
-            System.out.print(i+ "  ");
-        }
-        System.out.println();
+		// for(int i=0; i<vetor.length; i++)
+  //       {
+  //           System.out.print("["+i+"]"+"   ");
+  //       }
+  //       System.out.println();
         for(int i=0; i<vetor.length; i++)
         {
-            System.out.print(vetor[i]+"  ");
+            System.out.print(vetor[i]+"   ");
         }
         System.out.println();
     }
 	public static void main(String[] args)
 	{
 		System.out.println("********************************EXERCÍCIO 3********************************");
-		int []vetor = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};//= new int[20];
-		//preencheVetor(vetor);
+		int []vetor = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
 		imprimeVetor(vetor);
 		organizaVetor(vetor);
 		imprimeVetor(vetor);
