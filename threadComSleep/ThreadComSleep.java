@@ -21,14 +21,14 @@ public class ThreadComSleep implements Runnable
         	t = random.nextInt(20)+1;
         	System.out.println("Eu sou a Thread " +Thread.currentThread().getName()+ " e vou dormir por "+t+" segundos!");
         	try{
-                Thread.sleep(t*1000); //.sleeep(tempo em milissegundos) pode disparar exceção pois uma thread pode interrompida quando outra thread acordar
+                Thread.sleep(t*1000); //.sleep(tempo em milissegundos) dispara exceção (InterruptedException) se a thread atual for interrompida ou se o valor do tempo nao estiver entre 0 e 999999 (IllegalArgumentException) 
         	}catch(Exception e){
                 System.out.println(e);
         	}
         	System.out.println("Eu sou a Thread "+Thread.currentThread().getName()+". Já se passaram "+t+" segundos e eu serei finalizada!");
         }
     
-     public static void main(String[] args) throws Exception //A excução das threads com sleep pode disparar exceção
+     public static void main(String[] args)
     {
         System.out.println("4 threads com sleep");
         //cria as quatro threads e as inicializa
