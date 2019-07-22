@@ -11,8 +11,8 @@ public class multiplasThreads
     {
         System.out.println("Duas Threads em paralelo!");
         //cria as duas threads e as inicializa
-        new Thread(thread1).start();
         new Thread(thread2).start();
+        new Thread(thread1).start();
     }
     //Runnable é a interface padrão para Thread
     //Implementamos Runnable sobrescrevendo o método run() que é executado ao inicializar a Thread com o método start()

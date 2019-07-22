@@ -19,13 +19,13 @@ public class ThreadComSleep implements Runnable
         public void run()
         {
         	t = random.nextInt(20)+1;
-        	System.out.println("Eu sou a Thread " +Thread.currentThread().getName()+ " e vou dormir por "+t+" segundos!");
+        	System.out.println("A Thread " +Thread.currentThread().getName()+ " vai dormir por "+t+" segundos!");
         	try{
                 Thread.sleep(t*1000); //.sleep(tempo em milissegundos) dispara exceção (InterruptedException) se a thread atual for interrompida ou se o valor do tempo nao estiver entre 0 e 999999 (IllegalArgumentException) 
         	}catch(Exception e){
                 System.out.println(e);
         	}
-        	System.out.println("Eu sou a Thread "+Thread.currentThread().getName()+". Já se passaram "+t+" segundos e eu serei finalizada!");
+        	System.out.println("A Thread "+Thread.currentThread().getName()+". Já se passaram "+t+" segundos e esta thread será finalizada!");
         }
     
      public static void main(String[] args)
