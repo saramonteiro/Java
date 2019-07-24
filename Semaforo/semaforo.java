@@ -13,71 +13,67 @@ public class semaforo
     public static void main(String[] args)
     {
         Scanner in = new Scanner(System.in);
-        int numeroPermissoes = 1;
-        Semaphore semaforoCores = new Semaphore(numeroPermissoes);
+        int numeroPermissoes = 0;
+        Semaphore semaforoVermelho, semaforoAmarelo, semaforoVerde;
+        semaforoVermelho = new Semaphore(numeroPermissoes);
+        semaforoAmarelo = new Semaphore(numeroPermissoes);
+        semaforoVerde = new Semaphore(numeroPermissoes);
         System.out.println("Entre com o número de vezes na qual deseja executar o semáforo:");
-        int i = in.nextInt(), index;
-        System.out.println("Numero de vezes: "+i);
+        int iteracoes = in.nextInt();
+        System.out.println("Numero de vezes: "+iteracoes);
         //cria as duas threads e as inicializa
-        Cor thread_vermelha = new Cor(semaforoCores, "Vermelho");
-        Cor thread_amarela = new Cor(semaforoCores, "Amarelo");
-        Cor thread_verde = new Cor(semaforoCores, "Verde");
-        for(index = 0; index < i; index++)
-        {
-            try 
-            {            
-                semaforoCores.acquire();
-            }
-            catch (InterruptedException e) 
-            {
-                e.printStackTrace();
-            }
-            thread_vermelha.run();
-            try 
-            {            
-                semaforoCores.acquire();
-            }
-            catch (InterruptedException e) 
-            {
-                e.printStackTrace();
-            }
-            thread_amarela.run();
-            try 
-            {            
-                semaforoCores.acquire();
-            }catch (InterruptedException e) 
-            {
-                e.printStackTrace();
-            }
-            thread_verde.run();
-        }
+        Cor thread_vermelha = new Cor("Vermelho", iteracoes, semaforoVermelho, semaforoAmarelo);
+        Cor thread_amarela = new Cor("Amarelo", iteracoes, semaforoAmarelo, semaforoVerde);
+        Cor thread_verde = new Cor("Verde", iteracoes, semaforoVerde, semaforoVermelho);
+        thread_vermelha.start();
+        thread_amarela.start();
+        thread_verde.start();
+        semaforoVermelho.release();
     }
     //Runnable é a interface padrão para Thread
     //Implementamos Runnable sobrescrevendo o método run() que é executado ao inicializar a Thread com o método start()
     public static class Cor extends Thread 
     {
-        private Semaphore semaforo;
+        private Semaphore  aguarda, libera;
         private String cor;
-        public Cor(Semaphore semaforo, String cor)
+        private int iteracoes; 
+        public Cor(String cor, int iteracoes, Semaphore aguarda, Semaphore libera)
         {
-            this.semaforo = semaforo;
+            this.aguarda = aguarda;
+            this.libera = libera;
             this.cor = cor;
+            this.iteracoes = iteracoes;
+            //this.aguarda.release();
         }
         public void run()
         {
             Random random = new Random();
-            int t;
-            t = random.nextInt(10)+1;
-            System.out.println("A Thread " + this.cor+" vai dormir por "+t+" segundos!");
-            try
+            int t, index;
+            for(index = 0;index < this.iteracoes; index++)
             {
-                Thread.sleep(t*1000); //.sleep(tempo em milissegundos) dispara exceção (InterruptedException) se a thread atual for interrompida ou se o valor do tempo nao estiver entre 0 e 999999 (IllegalArgumentException) 
-            }catch(Exception e)
-            {
-                System.out.println(e);
+                try
+                {
+                    this.aguarda.acquire();
+                    t = random.nextInt(10)+1;
+                    System.out.println("A Thread " + this.cor+" vai dormir por "+t+" segundos!");
+                    try
+                    {
+                        Thread.sleep(t*1000); //.sleep(tempo em milissegundos) dispara exceção (InterruptedException) se a thread atual for interrompida ou se o valor do tempo nao estiver entre 0 e 999999 (IllegalArgumentException) 
+                    }catch(Exception e)
+                    {
+                        System.out.println(e);
+                    }
+                    System.out.println(this.cor);
+                }
+                catch (InterruptedException e) 
+                {
+                    e.printStackTrace();
+                }
+                finally
+                {
+                    this.libera.release();
+                }
             }
-            System.out.println(this.cor);
-            this.semaforo.release();
         }
     };  
 }
