@@ -30,8 +30,6 @@ public class semaforo
         thread_verde.start();
         semaforoVermelho.release();
     }
-    //Runnable é a interface padrão para Thread
-    //Implementamos Runnable sobrescrevendo o método run() que é executado ao inicializar a Thread com o método start()
     public static class Cor extends Thread 
     {
         private Semaphore  aguarda, libera;
