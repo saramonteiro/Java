@@ -13,35 +13,43 @@ public class semaforo
     public static void main(String[] args)
     {
         Scanner in = new Scanner(System.in);
-        int numeroPermissoes = 0;
-        Semaphore semaforoVermelho, semaforoAmarelo, semaforoVerde;
-        semaforoVermelho = new Semaphore(numeroPermissoes);
-        semaforoAmarelo = new Semaphore(numeroPermissoes);
-        semaforoVerde = new Semaphore(numeroPermissoes);
         System.out.println("Entre com o número de vezes na qual deseja executar o semáforo:");
         int iteracoes = in.nextInt();
         System.out.println("Numero de vezes: "+iteracoes);
-        //cria as duas threads e as inicializa
-        Cor thread_vermelha = new Cor("Vermelho", iteracoes, semaforoVermelho, semaforoAmarelo);
-        Cor thread_amarela = new Cor("Amarelo", iteracoes, semaforoAmarelo, semaforoVerde);
-        Cor thread_verde = new Cor("Verde", iteracoes, semaforoVerde, semaforoVermelho);
+
+        //Criação das threads
+        Cor thread_vermelha = new Cor("Vermelho", iteracoes);
+        Cor thread_amarela = new Cor("Amarelo", iteracoes);
+        Cor thread_verde = new Cor("Verde", iteracoes);
+        //Inicialização das threads
         thread_vermelha.start();
         thread_amarela.start();
         thread_verde.start();
-        semaforoVermelho.release();
+        //Link de semaforos para a sequencia (passando os ponteiros de semaforos)
+        thread_vermelha.setSemaforoLiberar(thread_amarela.getSemaforoCor());
+        thread_amarela.setSemaforoLiberar(thread_verde.getSemaforoCor());
+        thread_verde.setSemaforoLiberar(thread_vermelha.getSemaforoCor());
+        //Iniciar pela vermelha
+        thread_vermelha.getSemaforoCor().release();
     }
     public static class Cor extends Thread 
     {
-        private Semaphore  aguarda, libera;
+        private Semaphore semaforoDaCor,semaforoDaProximaCor;
         private String cor;
         private int iteracoes; 
-        public Cor(String cor, int iteracoes, Semaphore aguarda, Semaphore libera)
+        public Cor(String cor, int iteracoes)
         {
-            this.aguarda = aguarda;
-            this.libera = libera;
             this.cor = cor;
             this.iteracoes = iteracoes;
-            //this.aguarda.release();
+            this.semaforoDaCor = new Semaphore(0);//inicia bloqueado
+        }
+        public Semaphore getSemaforoCor()
+        {
+            return this.semaforoDaCor;
+        }
+        public void setSemaforoLiberar(Semaphore proximaCor)
+        {
+            this.semaforoDaProximaCor = proximaCor;
         }
         public void run()
         {
@@ -51,7 +59,7 @@ public class semaforo
             {
                 try
                 {
-                    this.aguarda.acquire();
+                    this.semaforoDaCor.acquire();
                     t = random.nextInt(10)+1;
                     System.out.println("A Thread " + this.cor+" vai dormir por "+t+" segundos!");
                     try
@@ -69,7 +77,7 @@ public class semaforo
                 }
                 finally
                 {
-                    this.libera.release();
+                    this.semaforoDaProximaCor.release();
                 }
             }
         }
